@@ -1,6 +1,6 @@
 # line-bot
 
-- GCP cloud functions
+- cloud functions on GCP
 
 ## deploy
 
