@@ -83,11 +83,12 @@ exports.reply = (req, res) => {
 
   const event = req.body.events[0]
   const message = event.message.text
-  getUserName(event.source.userId).then(userName =>{
+  
+  getUserName(event.source.userId).then(userName => {
     console.log(`user: ${userName}, message: ${message}`)
     return replyMessage(event.replyToken, userName, message)
   }).then(() => {
     res.status(200).send('success')
   })
-  
+
 }
