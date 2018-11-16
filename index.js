@@ -10,16 +10,16 @@ const lineConfig = {
 
 const lineClient = new line.Client(lineConfig)
 
-async function replyMessage(event, message) {
+async function replyMessage(replyToken, userName, message) {
   let reply = undefined
 
   if (containsOsusume(message)) {
-    reply = 'あなたへのオススメは、「' + selectSongRandom() + '」です！'
+    reply = userName + 'さんへのオススメは、\n「' + selectSongRandom() + '」\nです！'
   }
 
   if (reply) {
     console.log(`replyMessage: ${reply}`)
-    await lineClient.replyMessage(event.replyToken, { type: 'text', text: reply })
+    await lineClient.replyMessage(replyToken, { type: 'text', text: reply })
   }
 }
 
@@ -63,6 +63,11 @@ function containsOsusume(message) {
   return false
 }
 
+async function getUserName(userId) {
+  const profile = await lineClient.getProfile(userId)
+  return profile.displayName
+}
+
 /**
  * Responds to any HTTP request.
  *
@@ -78,10 +83,11 @@ exports.reply = (req, res) => {
 
   const event = req.body.events[0]
   const message = event.message.text
-  console.log(`message: ${message}`)
-
-  replyMessage(event, message).then(
+  getUserName(event.source.userId).then(userName =>{
+    console.log(`user: ${userName}, message: ${message}`)
+    return replyMessage(event.replyToken, userName, message)
+  }).then(() => {
     res.status(200).send('success')
-  )
-
+  })
+  
 }
