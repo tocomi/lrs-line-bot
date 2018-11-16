@@ -24,7 +24,26 @@ async function replyMessage(event, message) {
 }
 
 const songList = [
-  '大和撫子最強説'
+  '大和撫子最強説',
+  '舞姫',
+  '五月雨舞踏会',
+  '春の嵐',
+  'レディ・ムラサキ',
+  '都ロック',
+  '雪に舞う花',
+  '酔山',
+  'KAGUYA',
+  '桜吹雪',
+  '五山炎上',
+  '京乱フェイト',
+  '桜花転生',
+  '風林火山',
+  '百回泣いて',
+  '境界線',
+  '逆転アンビ',
+  'イド',
+  '光',
+  '君時間'
 ]
 function selectSongRandom() {
   return songList[Math.floor(Math.random() * songList.length)]
@@ -63,6 +82,6 @@ exports.reply = (req, res) => {
 
   replyMessage(event, message).then(
     res.status(200).send('success')
-)
+  )
 
 }
