@@ -104,8 +104,13 @@ exports.reply = (req, res) => {
   }
 
   const event = req.body.events[0]
-  const message = event.message.text
   console.log(event)
+
+  if (!event.message.text) {
+    res.status(200).send('Not text message.')
+    return;
+  }
+  const message = event.message.text
 
   getUserName(event.source.userId).then(userName => {
     console.log(`user: ${userName}, message: ${message}`)
