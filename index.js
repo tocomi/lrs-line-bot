@@ -75,7 +75,7 @@ const osusumeWord = [
   'おすすめ', 'オススメ', 'おススメ'
 ]
 function containsOsusume(message) {
-  for (let word of osusumeWord) {
+  for (const word of osusumeWord) {
     if (message.includes(word)) {
       console.log('Osusume word contains.')
       return true
