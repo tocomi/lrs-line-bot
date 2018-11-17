@@ -16,12 +16,16 @@ async function replyMessage(replyToken, userName, message) {
   reply = messageRandom()
 
   if (containsOsusume(message)) {
-    reply = userName + 'さんへのオススメは、\n「' + selectSongRandom() + '」\nです！'
+    reply = makeDisplayName(userName) + 'へのオススメは、\n「' + selectSongRandom() + '」\nです！'
   }
 
   if (reply) {
     console.log(`replyMessage: ${reply}`)
-    await lineClient.replyMessage(replyToken, { type: 'text', text: reply })
+    try {
+      await lineClient.replyMessage(replyToken, { type: 'text', text: reply })
+    } catch(e) {
+      console.log(e)
+    }
   }
 }
 
@@ -85,9 +89,20 @@ function containsOsusume(message) {
   return false
 }
 
+function makeDisplayName(userName) {
+  if (userName === '') {
+    return 'あなた'
+  }
+  return `${userName}さん`
+}
+
 async function getUserName(userId) {
-  const profile = await lineClient.getProfile(userId)
-  return profile.displayName
+  try {
+    const profile = await lineClient.getProfile(userId)
+    return profile.displayName
+  } catch(e) {
+    return ''
+  }
 }
 
 /**
