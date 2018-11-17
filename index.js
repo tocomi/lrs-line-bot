@@ -105,6 +105,7 @@ exports.reply = (req, res) => {
 
   const event = req.body.events[0]
   const message = event.message.text
+  console.log(event)
 
   getUserName(event.source.userId).then(userName => {
     console.log(`user: ${userName}, message: ${message}`)
