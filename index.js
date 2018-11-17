@@ -43,7 +43,7 @@ const messageList = [
 ]
 function messageRandom() {
   try {
-    return messageList[Math.floor(Math.random() * 30)]
+    return messageList[Math.floor(Math.random() * 50)]
   } catch(e) {
     return undefined
   }
